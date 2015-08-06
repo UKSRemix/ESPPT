@@ -65,8 +65,11 @@ namespace ESPPT
         {        
             _continue = false;
             Thread.Sleep(500);
-            _serialPort.Close();
-            readThread.Abort();
+            if(_serialPort.IsOpen)
+                _serialPort.Close();
+            if (readThread != null)
+                readThread.Abort();
+            
         }
         public void Send(string message)
         {

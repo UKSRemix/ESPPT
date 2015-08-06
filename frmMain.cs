@@ -34,11 +34,18 @@ namespace ESPPT
 {
     public partial class frmMain : Form
     {
-        Serial serial;
- 
+        Serial serial = new Serial();
+        IniFile config = new IniFile("config.ini");
         public frmMain()
         {
             InitializeComponent();
+            //Add envents
+            ESPTool.eventDebugText += new SerialMessage(DebugText);
+            ESPTool.eventInitSerial += new InitSerial(ConnectSerial);
+            Make.eventDebugText += new SerialMessage(DebugText);
+            Make.eventMakeDone += new MakeDone(Upload);
+            serial.eventSerialMessage += new SerialMessage(DebugText);
+            //Setup Datagrideview
             dgPaths.ColumnCount = 2;
             dgPaths.ColumnHeadersDefaultCellStyle.BackColor = Color.Navy;
             dgPaths.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
@@ -72,31 +79,50 @@ namespace ESPPT
             dgPaths.AllowUserToAddRows = false;
             dgPaths.GridColor = Color.White;
             dgPaths.ColumnHeadersDefaultCellStyle.BackColor = Color.Blue;
+            dgPaths.Rows.Add(9);
+        }
 
-            string[] lines = File.ReadAllLines("flashconfig.txt");
-            for (int i = 0; i < 9; i++)
+        public void ReadConfig(string path)
+        {
+            if (path == "") return;
+            string[] lines = File.ReadAllLines(path);
+            string projectPath = lines[0];
+            dgPaths.Rows.Clear();
+            for (int i = 1; i < 10; i++)
             {
                 string[] row;
-                if (i < lines.Count())
+                if(i < lines.Count())
                     row = lines[i].Split(',');
                 else
-                    row = new string[] { "", "0x00000" };
+                    row = new string[] { "", "" };
+
                 dgPaths.Rows.Add(row);
             }
+            config.setKey("[CONFIG]", "LastProject", path);
+            txtProjectPath.Text = projectPath;
+        }
+
+        public void WriteConfig(string filePath,string projectPath)
+        {   
+            string[] lines = new string[10];
+            lines[0] = projectPath;
+            for (int i = 0; i < dgPaths.Rows.Count; i++)
+            {
+                if(dgPaths.Rows[i].Cells[0].Value.ToString() != "")
+                    lines[i + 1] = string.Format("{0},{1}",dgPaths.Rows[i].Cells[0].Value.ToString(),dgPaths.Rows[i].Cells[1].Value.ToString());
+            }
+
+            File.WriteAllLines(filePath,lines);
+            config.setKey("[CONFIG]", "LastProject", filePath);
         }
 
         private void frmMain_Load(object sender, EventArgs e)
         {
-            ESPTool.eventDebugText += new SerialMessage(DebugText);
-            ESPTool.eventInitSerial += new InitSerial(ConnectSerial);
-            Make.eventDebugText += new SerialMessage(DebugText);
-            Make.eventMakeDone += new MakeDone(Upload);
-
-            serial = new Serial();
-            serial.eventSerialMessage += new SerialMessage(DebugText);
-
+          
             cbCom.Items.AddRange(serial.GetPorts());
             cbCom.Text = cbCom.Items[cbCom.Items.Count - 1].ToString();
+
+            ReadConfig(config.getKey("[CONFIG]", "LastProject"));
         }
 
         private void Upload()
@@ -140,11 +166,11 @@ namespace ESPPT
                 if (serial.Open()) btnConnect.Text = "Disconnect";
             }
         }
-     
+
         private void btn_Click(object sender, EventArgs e)
         {
             Button btn = (Button)sender;
-
+            DialogResult result;
             switch (btn.Name)
             {
                 case "btnConnect":
@@ -161,14 +187,31 @@ namespace ESPPT
                     break;
                 case "btnBuild":
                     Make.Compile(txtProjectPath.Text);
+                    if (chDoAll.Checked) Upload();
                     break;
                 case "btnUpload":
                     Upload();
                     break;
                 case "btnSaveConfig":
+
+                    saveFileDialog.InitialDirectory = AppDomain.CurrentDomain.BaseDirectory + @"config";
+                    saveFileDialog.FileName = "";
+                    result = saveFileDialog.ShowDialog();
+                    if (result == DialogResult.OK)
+                    {
+                        if (!saveFileDialog.FileName.EndsWith(".txt"))
+                            saveFileDialog.FileName += ".txt";
+                        WriteConfig(saveFileDialog.FileName,txtProjectPath.Text);
+                    }
                     break;
                 case "btnSend":
                     serial.Send(txtSend.Text);
+                    break;
+                case "btnLoad":
+                    oFD.InitialDirectory = AppDomain.CurrentDomain.BaseDirectory + @"config";
+                    oFD.FileName = "";
+                    result = oFD.ShowDialog();
+                    if (result == DialogResult.OK) ReadConfig(oFD.FileName);
                     break;
                 default:
                     break;
@@ -201,6 +244,7 @@ namespace ESPPT
                 txtDebug.AppendText(message + "\n");
             }
         }
+
 
     }
 

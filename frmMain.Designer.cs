@@ -49,8 +49,12 @@
             this.label7 = new System.Windows.Forms.Label();
             this.dgPaths = new System.Windows.Forms.DataGridView();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnLoad = new System.Windows.Forms.Button();
             this.btnBuild = new System.Windows.Forms.Button();
             this.btnSaveConfig = new System.Windows.Forms.Button();
+            this.chDoAll = new System.Windows.Forms.CheckBox();
+            this.oFD = new System.Windows.Forms.OpenFileDialog();
+            this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.dgPaths)).BeginInit();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -258,9 +262,9 @@
             // btnUpload
             // 
             this.btnUpload.ForeColor = System.Drawing.Color.Black;
-            this.btnUpload.Location = new System.Drawing.Point(118, 279);
+            this.btnUpload.Location = new System.Drawing.Point(222, 281);
             this.btnUpload.Name = "btnUpload";
-            this.btnUpload.Size = new System.Drawing.Size(95, 23);
+            this.btnUpload.Size = new System.Drawing.Size(61, 23);
             this.btnUpload.TabIndex = 16;
             this.btnUpload.Text = "Upload";
             this.btnUpload.UseVisualStyleBackColor = true;
@@ -272,9 +276,8 @@
             this.txtProjectPath.ForeColor = System.Drawing.Color.White;
             this.txtProjectPath.Location = new System.Drawing.Point(84, 8);
             this.txtProjectPath.Name = "txtProjectPath";
-            this.txtProjectPath.Size = new System.Drawing.Size(218, 20);
+            this.txtProjectPath.Size = new System.Drawing.Size(153, 20);
             this.txtProjectPath.TabIndex = 17;
-            this.txtProjectPath.Text = "C:\\ESP8266\\projects\\test";
             // 
             // label7
             // 
@@ -296,8 +299,10 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.btnLoad);
             this.panel1.Controls.Add(this.btnBuild);
             this.panel1.Controls.Add(this.btnSaveConfig);
+            this.panel1.Controls.Add(this.chDoAll);
             this.panel1.Controls.Add(this.btnUpload);
             this.panel1.Controls.Add(this.dgPaths);
             this.panel1.Controls.Add(this.txtProjectPath);
@@ -307,12 +312,23 @@
             this.panel1.Size = new System.Drawing.Size(332, 309);
             this.panel1.TabIndex = 20;
             // 
+            // btnLoad
+            // 
+            this.btnLoad.ForeColor = System.Drawing.Color.Black;
+            this.btnLoad.Location = new System.Drawing.Point(243, 5);
+            this.btnLoad.Name = "btnLoad";
+            this.btnLoad.Size = new System.Drawing.Size(40, 23);
+            this.btnLoad.TabIndex = 23;
+            this.btnLoad.Text = "Load";
+            this.btnLoad.UseVisualStyleBackColor = true;
+            this.btnLoad.Click += new System.EventHandler(this.btn_Click);
+            // 
             // btnBuild
             // 
             this.btnBuild.ForeColor = System.Drawing.Color.Black;
-            this.btnBuild.Location = new System.Drawing.Point(17, 279);
+            this.btnBuild.Location = new System.Drawing.Point(155, 281);
             this.btnBuild.Name = "btnBuild";
-            this.btnBuild.Size = new System.Drawing.Size(95, 23);
+            this.btnBuild.Size = new System.Drawing.Size(61, 23);
             this.btnBuild.TabIndex = 21;
             this.btnBuild.Text = "Build";
             this.btnBuild.UseVisualStyleBackColor = true;
@@ -321,13 +337,27 @@
             // btnSaveConfig
             // 
             this.btnSaveConfig.ForeColor = System.Drawing.Color.Black;
-            this.btnSaveConfig.Location = new System.Drawing.Point(219, 279);
+            this.btnSaveConfig.Location = new System.Drawing.Point(289, 5);
             this.btnSaveConfig.Name = "btnSaveConfig";
-            this.btnSaveConfig.Size = new System.Drawing.Size(95, 23);
+            this.btnSaveConfig.Size = new System.Drawing.Size(40, 23);
             this.btnSaveConfig.TabIndex = 20;
             this.btnSaveConfig.Text = "Save";
             this.btnSaveConfig.UseVisualStyleBackColor = true;
             this.btnSaveConfig.Click += new System.EventHandler(this.btn_Click);
+            // 
+            // chDoAll
+            // 
+            this.chDoAll.AutoSize = true;
+            this.chDoAll.Location = new System.Drawing.Point(55, 284);
+            this.chDoAll.Name = "chDoAll";
+            this.chDoAll.Size = new System.Drawing.Size(84, 17);
+            this.chDoAll.TabIndex = 22;
+            this.chDoAll.Text = "1 Click Build";
+            this.chDoAll.UseVisualStyleBackColor = true;
+            // 
+            // oFD
+            // 
+            this.oFD.FileName = "openFileDialog";
             // 
             // frmMain
             // 
@@ -390,6 +420,10 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button btnSaveConfig;
         private System.Windows.Forms.Button btnBuild;
+        private System.Windows.Forms.CheckBox chDoAll;
+        private System.Windows.Forms.Button btnLoad;
+        private System.Windows.Forms.OpenFileDialog oFD;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog;
     }
 }
 
