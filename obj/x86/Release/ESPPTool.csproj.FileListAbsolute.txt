@@ -1,7 +1,0 @@
-C:\ESP8266\tools\ESPPTool\bin\Release\ESPPT.exe
-C:\ESP8266\tools\ESPPTool\bin\Release\ESPPT.pdb
-C:\ESP8266\tools\ESPPTool\obj\x86\Release\ESPPT.frmMain.resources
-C:\ESP8266\tools\ESPPTool\obj\x86\Release\ESPPT.Properties.Resources.resources
-C:\ESP8266\tools\ESPPTool\obj\x86\Release\ESPPTool.csproj.GenerateResource.Cache
-C:\ESP8266\tools\ESPPTool\obj\x86\Release\ESPPT.exe
-C:\ESP8266\tools\ESPPTool\obj\x86\Release\ESPPT.pdb
