@@ -80,6 +80,8 @@ namespace ESPPT
             dgPaths.GridColor = Color.White;
             dgPaths.ColumnHeadersDefaultCellStyle.BackColor = Color.Blue;
             dgPaths.Rows.Add(9);
+
+           chDoAll.Checked = Convert.ToBoolean(config.getKey("[CONFIG]", "AutoBuild"));
         }
 
         public void ReadConfig(string path)
@@ -243,6 +245,11 @@ namespace ESPPT
             {
                 txtDebug.AppendText(message + "\n");
             }
+        }
+
+        private void chDoAll_CheckedChanged(object sender, EventArgs e)
+        {
+            config.setKey("[CONFIG]", "AutoBuild", chDoAll.Checked.ToString());
         }
 
 

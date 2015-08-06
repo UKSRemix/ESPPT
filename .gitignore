@@ -36,6 +36,8 @@ $RECYCLE.BIN/
 .Trashes
 
 # Directories potentially created on remote AFP share
+.gitattributes
+.gitignore
 .AppleDB
 .AppleDesktop
 Network Trash Folder

@@ -348,12 +348,15 @@
             // chDoAll
             // 
             this.chDoAll.AutoSize = true;
+            this.chDoAll.Checked = true;
+            this.chDoAll.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chDoAll.Location = new System.Drawing.Point(55, 284);
             this.chDoAll.Name = "chDoAll";
             this.chDoAll.Size = new System.Drawing.Size(84, 17);
             this.chDoAll.TabIndex = 22;
             this.chDoAll.Text = "1 Click Build";
             this.chDoAll.UseVisualStyleBackColor = true;
+            this.chDoAll.CheckedChanged += new System.EventHandler(this.chDoAll_CheckedChanged);
             // 
             // oFD
             // 
