@@ -282,11 +282,11 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(24, 11);
+            this.label7.Location = new System.Drawing.Point(6, 11);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(54, 13);
+            this.label7.Size = new System.Drawing.Size(72, 13);
             this.label7.TabIndex = 18;
-            this.label7.Text = "Bin Folder";
+            this.label7.Text = "Project Folder";
             // 
             // dgPaths
             // 

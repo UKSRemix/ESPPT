@@ -188,8 +188,7 @@ namespace ESPPT
                     }
                     break;
                 case "btnBuild":
-                    Make.Compile(txtProjectPath.Text);
-                    if (chDoAll.Checked) Upload();
+                    Make.Compile(txtProjectPath.Text, chDoAll.Checked);
                     break;
                 case "btnUpload":
                     Upload();
@@ -251,8 +250,6 @@ namespace ESPPT
         {
             config.setKey("[CONFIG]", "AutoBuild", chDoAll.Checked.ToString());
         }
-
-
     }
 
     public delegate void MakeDone();
@@ -260,10 +257,10 @@ namespace ESPPT
     {
         public static event SerialMessage eventDebugText;
         public static event MakeDone eventMakeDone;
-
-        public static void Compile(string dir)
+        static Process proc;
+        public static void Compile(string dir,bool confirm = false)
         {
-            Process proc = new Process();
+            proc = new Process();
             proc.StartInfo.UseShellExecute = false;
             proc.StartInfo.RedirectStandardError = false;
             proc.StartInfo.RedirectStandardInput = true;
@@ -278,14 +275,18 @@ namespace ESPPT
                 proc.Start();
                 proc.StandardInput.WriteLine(string.Format("Make"));
                 proc.BeginOutputReadLine();
+                proc.WaitForExit();
+                if (confirm && eventMakeDone != null) eventMakeDone();
+
             }).Start();
+
+            
         }
 
         private static void DataReceived(string data)
         {
             if (eventDebugText != null) eventDebugText(string.Format("{0}", data));
-            if (data.Contains("Leaving..."))
-                if (eventMakeDone != null) eventMakeDone();
+            if (data !=null && data.Contains("Nothing to be done for 'all'.")) proc.Kill();
         }
     }
 
