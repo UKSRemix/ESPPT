@@ -286,7 +286,7 @@ namespace ESPPT
         private static void DataReceived(string data)
         {
             if (eventDebugText != null) eventDebugText(string.Format("{0}", data));
-            if (data !=null && data.Contains("Nothing to be done for 'all'.")) proc.Kill();
+            if (data !=null && (data.Contains("Nothing to be done for 'all'.") || data.Contains("esptool -eo build/esp8266_at.out -es .irom0.text"))) proc.Kill();
         }
     }
 

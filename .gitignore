@@ -45,3 +45,4 @@ Temporary Items
 .apdisk
 obj/x86/Debug/ESPPTool.csproj.FileListAbsolute.txt
 *.resources
+obj/x86/Release/ESPPTool.csproj.FileListAbsolute.txt
